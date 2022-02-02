@@ -3,11 +3,12 @@ import { Company } from "./Company";
 
 // Instructions to every ohter case
 // on how they can be an argument to 'addMaker'
-interface Mappable {
+export interface Mappable {
   location: {
     lat: number;
     lng: number;
   };
+  makerContent(): string;
 }
 export class CustomMap {
   private googleMap: google.maps.Map;
@@ -33,7 +34,7 @@ export class CustomMap {
 
     maker.addListener("click", () => {
       const infoWindow = new google.maps.InfoWindow({
-        content: "Hi there!",
+        content: mappable.makerContent(),
       });
       infoWindow.open(this.googleMap, maker);
     });
