@@ -1,15 +1,10 @@
-import { CsvFileReader } from "./CsvFileReader";
 import { MatchReader } from "./MatchReader";
-import { WinsAnalysis } from "./analyzers/WinsAnalysis";
-import { HtmlReport } from "./reportTargets/HtmlReport";
 import { Summary } from "./Summary";
 
-// Create an object that satisfies the 'DataReader' interface
-const csvFileReader = new CsvFileReader("football.csv");
-
-// Create an instance of MatchReader and pass in something satisfying the 'DataReader' inerface
-const matchReader = new MatchReader(csvFileReader);
+const matchReader = MatchReader.fromCsv("football.csv");
+const summary = Summary.winsAnalysisWithHtmlReport("Man United");
 matchReader.load();
+summary.buildAndPrintReport(matchReader.matches);
 
 /** Issues
  * [x] Magic string comparisons -> enum
@@ -20,6 +15,3 @@ matchReader.load();
  * [x] Variable named after a specific team -> WinsAnalysis
  * [x] Analysis type is fixed & No ability to output the report in diffrent formats -> HtmlReport
  */
-
-const summary = new Summary(new WinsAnalysis("Man United"), new HtmlReport());
-summary.buildAndPrintReport(matchReader.matches);
