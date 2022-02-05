@@ -9,20 +9,23 @@ const matches = fs
 
 /**
  * [ Issues ]
- * Magic string comparisions
- * Source of data is hardcoded
+ * Magic string comparisons & Source of data is hardcoded
  * Data array is all strings, even though it might have numbers in it
  * Variable named after a specific team
  * Analysis type is fixed
  * No ability to output the report in diffrent formats
  */
 
+const homeWin = "H";
+const awayWin = "A";
+const draw = "D";
+
 let manUnitedWins = 0;
 
 for (let match of matches) {
-  if (match[1] === "Man United" && match[5] === "H") {
+  if (match[1] === "Man United" && match[5] === homeWin) {
     manUnitedWins++;
-  } else if (match[2] === "Man United" && match[5] === "A") {
+  } else if (match[2] === "Man United" && match[5] === awayWin) {
     manUnitedWins++;
   }
 }
