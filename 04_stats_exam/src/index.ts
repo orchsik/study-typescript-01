@@ -1,9 +1,7 @@
-import { CsvFileReader } from "./CsvFileReader";
 import { MatchReader } from "./MatchReader";
 import { MatchResult } from "./MatchResult";
 
-const csvFileReader = new CsvFileReader("football.csv");
-const matchReader = new MatchReader(csvFileReader);
+const matchReader = MatchReader.fromCsv("football.csv");
 matchReader.load();
 
 // 맨유가 승리한 횟수를 출력
