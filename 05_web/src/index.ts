@@ -1,6 +1,12 @@
 import axios from "axios";
 import { User } from "./models/User";
 
+const user = new User({ name: "MAGIC SHOW", age: 1000 });
+user.events.on("change", () => {
+  console.log("change!");
+});
+user.events.trigger("change");
+
 // const user = new User({ name: "MAGIC SHOW", age: 1000 });
 // user.attributes.get('id')
 // user.attributes.get('name')
