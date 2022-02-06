@@ -1,4 +1,5 @@
 import fs from "fs";
+import { CsvFileReader } from "./CsvFileReader";
 
 /** csv info
 [0] 12/08/2018 - 경기일자
@@ -10,24 +11,20 @@ import fs from "fs";
 [6] M Oliver - MVP
  */
 
+// 맨유가 승리한 횟수를 출력
+const csvFileReader = new CsvFileReader("football.csv");
+csvFileReader.read();
+
 enum MatchResult {
   HomeWin = "H",
   AwayWin = "A",
   Draw = "D",
 }
 
-// 맨유가 승리한 횟수를 출력
-const data: string[][] = fs
-  .readFileSync("football.csv", {
-    encoding: "utf-8",
-  })
-  .split("\n")
-  .map((row) => row.split(","));
-
 const ManU = "Man United";
 let manUnitedWins = 0;
 
-data.forEach((match) => {
+csvFileReader.data.forEach((match) => {
   const home = match[1];
   const away = match[2];
   const matchResult = match[5];
@@ -44,7 +41,7 @@ console.log({ manUnitedWins });
 
 /** Issues
  * [x] Magic string comparisons -> enum
- * [ ] Source of data is hardcoded -> CsvFileReader
+ * [x] Source of data is hardcoded -> CsvFileReader
  * [ ] Data array is all strings, even though it might have numbers in it -> fix CsvFileReader
       [ ] Non-reusable CsvFileReader(csv file diffrent format) -> using inheritance (abstract class CsvFileReader + class MatchResult)
       [ ] Non-reusable CsvFileReader(csv file diffrent format) -> using composition (class CsvFileReader + class MatchReader)
