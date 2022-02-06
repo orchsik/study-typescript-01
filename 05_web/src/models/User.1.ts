@@ -7,15 +7,11 @@ interface UserProps {
   age?: number;
 }
 
-/**
- * Only accept properties into constructor
- * Hard code dependencies as class properties
- * [ex] const user =  new User({id:1})
- */
+// Option #1
+// Accept dependencies as second constructor argument
+// [ex] const user = new User({ id: 1 }, new Eventing());
 export class User {
-  events: Eventing = new Eventing();
-
-  constructor(private data: UserProps) {}
+  constructor(private data: UserProps, private events: Eventing) {}
 
   get(propName: keyof UserProps): number | string {
     return this.data[propName];

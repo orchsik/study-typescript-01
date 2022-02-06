@@ -7,15 +7,21 @@ interface UserProps {
   age?: number;
 }
 
-/**
- * Only accept properties into constructor
- * Hard code dependencies as class properties
- * [ex] const user =  new User({id:1})
- */
+// Option #2
+// Only accept dependencies into constructor
+// Define a static class method to preconfigure
+// User and assign properties afterwards
+// [ex] const user = User.fromData({ id:1 })
 export class User {
-  events: Eventing = new Eventing();
+  static fromData(data: UserProps) {
+    const user = new User(new Eventing());
+    user.set(data);
+    return user;
+  }
 
-  constructor(private data: UserProps) {}
+  private data: UserProps;
+
+  constructor(private events: Eventing) {}
 
   get(propName: keyof UserProps): number | string {
     return this.data[propName];
