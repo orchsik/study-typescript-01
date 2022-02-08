@@ -1,12 +1,24 @@
 import axios from "axios";
 import { User } from "./models/User";
 
-const user = new User({ name: "new record", age: 0 });
-user.on("change", () => {
-  console.log("user was changed");
+const user = new User({ id: 1, name: "newer name", age: 0 });
+user.on("save", () => {
+  console.log(user);
 });
-user.trigger("change");
-console.log(user.get("name"));
+user.save();
+
+// const user = new User({ id: 1 });
+// user.on("change", () => {
+//   console.log(user);
+// });
+// user.fetch();
+
+// const user = new User({ name: "new record", age: 0 });
+// user.on("change", () => {
+//   console.log("user was changed");
+// });
+// user.set({ name: "new name" });
+// console.log(user.get("name"));
 
 // const user = new User({ name: "MAGIC SHOW", age: 1000 });
 // user.events.on("change", () => {

@@ -11,10 +11,10 @@ export class Eventing {
 
   trigger = (eventName: string): void => {
     const handlers = this.events[eventName];
-
-    handlers.length &&
+    if (handlers.length) {
       handlers.forEach((callback) => {
         callback();
       });
+    }
   };
 }
