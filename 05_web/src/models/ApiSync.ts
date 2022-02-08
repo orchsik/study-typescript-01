@@ -4,8 +4,7 @@ interface HasId {
   id?: number;
 }
 
-// Sync is a generic class to customize the type of 'data' coming into save()
-export class Sync<T extends HasId> {
+export class ApiSync<T extends HasId> {
   constructor(
     // http://localhost:3000/users
     public rootUrl: string

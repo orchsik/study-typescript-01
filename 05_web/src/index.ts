@@ -1,11 +1,17 @@
 import axios from "axios";
 import { User } from "./models/User";
 
-const user = new User({ id: 1, name: "newer name", age: 0 });
-user.on("save", () => {
+const user = User.buildUser({ id: 1 });
+user.on("change", () => {
   console.log(user);
 });
-user.save();
+user.fetch();
+
+// const user = new User({ id: 1, name: "newer name", age: 0 });
+// user.on("save", () => {
+//   console.log(user);
+// });
+// user.save();
 
 // const user = new User({ id: 1 });
 // user.on("change", () => {
