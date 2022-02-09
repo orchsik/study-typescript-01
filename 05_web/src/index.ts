@@ -1,11 +1,23 @@
 import axios from "axios";
-import { User } from "./models/User";
+import { User, UserProps } from "./models/User";
+import { Collection } from "./models/Collection";
 
-const user = User.buildUser({ id: 1 });
-user.on("change", () => {
-  console.log(user);
-});
-user.fetch();
+const collection = User.buildUserCollection();
+collection.on("change", () => console.log(collection));
+collection.fetch();
+
+// const collection = new Collection<User, UserProps>(
+//   "http://localhost:3000/users",
+//   (json: UserProps) => User.buildUser(json)
+// );
+// collection.on("change", () => console.log(collection));
+// collection.fetch();
+
+// const user = User.buildUser({ id: 1 });
+// user.on("change", () => {
+//   console.log(user);
+// });
+// user.fetch();
 
 // const user = new User({ id: 1, name: "newer name", age: 0 });
 // user.on("save", () => {
