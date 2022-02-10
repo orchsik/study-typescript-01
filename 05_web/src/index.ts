@@ -1,10 +1,14 @@
 import axios from "axios";
 import { User, UserProps } from "./models/User";
 import { Collection } from "./models/Collection";
+import { UserForm } from "./views/UserForm";
 
-const collection = User.buildUserCollection();
-collection.on("change", () => console.log(collection));
-collection.fetch();
+const userForm = new UserForm(document.getElementById("root"));
+userForm.render();
+
+// const collection = User.buildUserCollection();
+// collection.on("change", () => console.log(collection));
+// collection.fetch();
 
 // const collection = new Collection<User, UserProps>(
 //   "http://localhost:3000/users",
