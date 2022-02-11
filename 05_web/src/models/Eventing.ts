@@ -7,6 +7,7 @@ export class Eventing {
     const handlers = this.events[eventName] || [];
     handlers.push(callback);
     this.events[eventName] = handlers;
+    const root = document.getElementById("root");
   };
 
   trigger = (eventName: string): void => {
