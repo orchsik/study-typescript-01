@@ -28,8 +28,11 @@ router.get("/login", (req, res) => {
 });
 router.post("/login", (req, res) => {
     const { email, password } = req.body;
-    res.send({
-        email,
-        password,
-    });
+    if (email && password) {
+        res.send({
+            email: email.toUpperCase(),
+            password,
+        });
+    }
+    res.send("You must provide an email and password");
 });
