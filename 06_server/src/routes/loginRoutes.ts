@@ -1,9 +1,19 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 
 interface RequestWithBody extends Request {
   body: {
     [key: string]: string | undefined;
   };
+}
+
+function requireAuth(req: Request, res: Response, next: NextFunction): void {
+  if (req.session?.loggedIn) {
+    next();
+    return;
+  }
+
+  res.status(403);
+  res.send("Not permitted");
 }
 
 const router = Router();
@@ -51,6 +61,15 @@ router.get("/", (req: Request, res: Response) => {
     </div>
   `);
   }
+});
+
+router.get("/logout", (req: Request, res: Response) => {
+  req.session = undefined;
+  res.redirect("/");
+});
+
+router.get("/protected", requireAuth, (req: Request, res: Response) => {
+  res.send("Welcome to protected route, logged in well");
 });
 
 export { router };
