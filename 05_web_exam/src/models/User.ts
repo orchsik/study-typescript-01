@@ -1,16 +1,17 @@
 import axios from "axios";
-
+import { Eventing } from "./Eventing";
 interface UserProps {
   id: string;
   name?: string;
   age?: number;
 }
 
-type Callback = () => void;
 export class User {
-  private events: { [key: string]: Callback[] } = {};
+  events: Eventing;
 
-  constructor(private data?: UserProps) {}
+  constructor(private data?: UserProps) {
+    this.events = new Eventing();
+  }
 
   hello() {
     console.log(this.data);
@@ -22,20 +23,6 @@ export class User {
 
   set(update: UserProps) {
     Object.assign(this.data, update);
-  }
-
-  on(eventName: string, cb: Callback) {
-    const handlers = this.events[eventName] || [];
-    handlers.push(cb);
-    this.events[eventName] = handlers;
-  }
-
-  trigger(eventName: string) {
-    const callbaks = this.events[eventName];
-    if (!callbaks || !callbaks.length) {
-      return;
-    }
-    callbaks.forEach((cb) => cb());
   }
 
   async fetch(): Promise<void> {
@@ -59,7 +46,7 @@ export class User {
         axios.post(`http://localhost:3000/users`, this.data);
       }
 
-      this.trigger("save");
+      this.events.trigger("save");
     } catch (error) {
       console.log(error);
     }
