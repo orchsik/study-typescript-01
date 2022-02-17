@@ -12,4 +12,7 @@
 
 1. 패키지 설치 axios / parcel / json-server
 2. User 클래스 구현 (기능만 생각 & 화면단 ㄴㄴ)
-3. 이벤트 기능 분리 - Eventing 클래스 분리
+3. User 클래스에서 Sync, Eventing, Attributes 클래스 추출해내기
+   - Sync: fetch, save 와 같이 db와 동기화하는 기능
+   - Eventing: trigger, on 와 같이 이벤트 관련 기능
+   - Attributes: get, getAll, set 와 같이 속성 핸들링 기능

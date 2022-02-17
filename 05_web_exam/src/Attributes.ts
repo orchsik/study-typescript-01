@@ -1,11 +1,15 @@
 export class Attributes<T> {
   constructor(private data: T) {}
 
-  get<K extends keyof T>(key: K): T[K] {
+  get = <K extends keyof T>(key: K) => {
     return this.data[key];
-  }
+  };
 
-  set(update: T) {
+  getAll = (): T => {
+    return this.data;
+  };
+
+  set = (update: T) => {
     Object.assign(this.data, update);
-  }
+  };
 }
