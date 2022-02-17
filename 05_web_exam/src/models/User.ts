@@ -1,7 +1,8 @@
+import { Attributes } from "../Attributes";
 import { Eventing } from "./Eventing";
 import { Sync } from "./Sync";
 
-interface UserProps {
+export interface UserProps {
   id: string;
   name?: string;
   age?: number;
@@ -12,27 +13,13 @@ const rootUrl = "http://localhost:3000/users";
 export class User {
   events: Eventing = new Eventing();
   sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+  attributes: Attributes<UserProps>;
 
-  constructor(private data?: UserProps) {}
+  constructor(data: UserProps) {
+    this.attributes = new Attributes<UserProps>(data);
+  }
 
   hello() {
-    console.log(this.data);
-  }
-
-  get<K extends keyof UserProps>(propName: K): UserProps[K] {
-    return this.data[propName];
-  }
-
-  set(update: UserProps) {
-    Object.assign(this.data, update);
-  }
-
-  save() {
-    this.sync
-      .save(this.data)
-      .then(() => {
-        this.events.trigger("save");
-      })
-      .catch((err) => console.log(err));
+    console.log(this.attributes);
   }
 }
