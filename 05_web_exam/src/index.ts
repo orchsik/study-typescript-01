@@ -1,5 +1,9 @@
 import { User } from "./models/User";
 
+const collection = User.buildUserCollection();
+collection.on("change", () => console.log(collection));
+collection.fetch();
+
 const testSave = () => {
   const user = new User({ id: "1", name: "new record", age: 1 });
   user.on("save", () => {
@@ -18,8 +22,8 @@ const testFetch = () => {
   user.fetch();
 };
 
-testSave();
-testFetch();
+// testSave();
+// testFetch();
 
 // const testUser = () => {
 //   const user = new User({
