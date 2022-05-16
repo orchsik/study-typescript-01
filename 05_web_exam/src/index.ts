@@ -1,8 +1,29 @@
 import { User } from "./models/User";
 
-const user = new User({ id: "1", name: "new record", age: 0 });
-user.on("save", () => user.hello());
-user.save();
+const collection = User.buildUserCollection();
+collection.on("change", () => console.log(collection));
+collection.fetch();
+
+const testSave = () => {
+  const user = new User({ id: "1", name: "new record", age: 1 });
+  user.on("save", () => {
+    console.log("save !!!");
+    user.hello();
+  });
+  user.save();
+};
+
+const testFetch = () => {
+  const user = new User({ id: "1" });
+  user.on("fetch", () => {
+    console.log("fetch !!!");
+    user.hello();
+  });
+  user.fetch();
+};
+
+// testSave();
+// testFetch();
 
 // const testUser = () => {
 //   const user = new User({

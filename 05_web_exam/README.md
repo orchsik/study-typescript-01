@@ -16,3 +16,5 @@
    - Sync: fetch, save 와 같이 db와 동기화하는 기능
    - Eventing: trigger, on 와 같이 이벤트 관련 기능
    - Attributes: get, getAll, set 와 같이 속성 핸들링 기능
+4. User에 구현된 기능은 인터페이스만 달라지면 다른 모델에서 사용할 수 있다. Model 클래스로 따리 분리하자.
+5. 여러 모델의 데이터를 다루는 Collection 클래스 만들기

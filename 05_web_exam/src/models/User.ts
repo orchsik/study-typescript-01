@@ -1,7 +1,8 @@
-import { AxiosResponse } from "axios";
-import { Attributes } from "../Attributes";
+import { Attributes } from "./Attributes";
 import { Eventing } from "./Eventing";
-import { Sync } from "./Sync";
+import { Model } from "./Model";
+import { ApiSync } from "./ApiSync";
+import { Collection } from "./Collection";
 
 export interface UserProps {
   id?: string;
@@ -11,57 +12,22 @@ export interface UserProps {
 
 const rootUrl = "http://localhost:3000/users";
 
-export class User {
-  events: Eventing = new Eventing();
-  sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
-  attributes: Attributes<UserProps>;
-
-  constructor(data: UserProps) {
-    this.attributes = new Attributes<UserProps>(data);
-  }
-
-  get get() {
-    return this.attributes.get;
-  }
-
-  get getAll() {
-    return this.attributes.getAll;
-  }
-
-  get set() {
-    return this.attributes.set;
-  }
-
-  get on() {
-    return this.events.on;
-  }
-
-  get trigger() {
-    return this.events.trigger;
-  }
-
-  fetch(): void {
-    const id = this.get("id");
-    if (!id) {
-      throw new Error("Cannot fetch without an id");
-    }
-    this.sync.fetch(id).then((response: AxiosResponse) => {
-      this.set(response.data);
+export class User extends Model<UserProps> {
+  static buildUserCollection() {
+    return new Collection<User, UserProps>(rootUrl, (json: UserProps) => {
+      return new User(json);
     });
   }
 
-  save(): void {
-    this.sync
-      .save(this.getAll())
-      .then((response: AxiosResponse) => {
-        this.trigger("save");
-      })
-      .catch(() => {
-        this.trigger("error");
-      });
+  constructor(private attrs: UserProps) {
+    super(
+      new Attributes<UserProps>(attrs),
+      new Eventing(),
+      new ApiSync<UserProps>(rootUrl)
+    );
   }
 
   hello() {
-    console.table(this.attributes);
+    console.table(this.attrs);
   }
 }
